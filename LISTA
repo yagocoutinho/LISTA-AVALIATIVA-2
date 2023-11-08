@@ -1,0 +1,181 @@
+******************************************************
+QUESTÃO 1
+******************************************************
+
+#include <stdio.h>
+
+int main(){
+    int numero = 10;
+    int valor[10];
+    int conjunto_atual[10];
+    for (int i = 0; i < numero; i++) {
+        scanf("%d", &valor[i]);
+    }
+    while (numero > 1)
+    {
+         for (int i = 0; i < numero; i++) {
+            printf("%d", valor[i]);
+            
+            if (i < numero - 1) {
+                printf(" ");
+             }
+         }
+         printf("\n");
+         for (int i = 0; i < numero - 1; i++)
+         {
+            conjunto_atual[i] = valor[i] + valor[i+1];
+         }
+         numero--;
+         for (int i = 0; i < numero; i++)
+         {
+            valor[i] = conjunto_atual[i];
+         }
+         
+    }
+    printf("%d\n", valor[0]);
+    
+
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+******************************************************
+QUESTÃO 2
+******************************************************
+
+
+#include <stdio.h>
+
+float calculateWeightedStrength(int strengths[]) {
+    return (8 * strengths[0] + 10 * (strengths[1] + strengths[2]) + 5 * (strengths[3] + strengths[4]) + 8 * (strengths[5] + strengths[6]) + 11 * (strengths[7] + strengths[8]) + 12 * (strengths[9] + strengths[10])) / 100.0;
+}
+
+int main() {
+    int strengthsTeamA[11] = {0}, strengthsTeamB[11] = {0};
+    char nameTeamA[31], nameTeamB[31];
+    char playerName[31], playerPosition;
+    int playerStrength;
+    
+    scanf(" %30[^\n]", nameTeamA);
+    for (int i = 0; i < 11; i++) {
+        scanf(" %30[^;]; %c; %d", playerName, &playerPosition, &playerStrength);
+
+        int position = (playerPosition == 'L') ? (strengthsTeamA[1] == 0) ? 1 : 2 : 
+        (playerPosition == 'Z') ? (strengthsTeamA[3] == 0) ? 3 : 4 : 
+        (playerPosition == 'V') ? (strengthsTeamA[5] == 0) ? 5 : 6 : 
+        (playerPosition == 'M') ? (strengthsTeamA[7] == 0) ? 7 : 8 : 
+        (playerPosition == 'A') ? (strengthsTeamA[9] == 0) ? 9 : 10 : 0;
+
+        if (strengthsTeamA[position] == 0)
+            strengthsTeamA[position] = playerStrength;
+    }
+
+    scanf(" %30[^\n]", nameTeamB);
+    for (int i = 0; i < 11; i++) {
+        scanf(" %30[^;]; %c; %d", playerName, &playerPosition, &playerStrength);
+
+        int position = (playerPosition == 'L') ? (strengthsTeamB[1] == 0) ? 1 : 2 : 
+        (playerPosition == 'Z') ? (strengthsTeamB[3] == 0) ? 3 : 4 : 
+        (playerPosition == 'V') ? (strengthsTeamB[5] == 0) ? 5 : 6 : 
+        (playerPosition == 'M') ? (strengthsTeamB[7] == 0) ? 7 : 8 : 
+        (playerPosition == 'A') ? (strengthsTeamB[9] == 0) ? 9 : 10 : 0;
+
+        if (strengthsTeamB[position] == 0)
+            strengthsTeamB[position] = playerStrength;
+    }
+
+    float strengthTeamA = calculateWeightedStrength(strengthsTeamA);
+    float strengthTeamB = calculateWeightedStrength(strengthsTeamB);
+
+    printf("%s: %.2f de forca\n%s: %.2f de forca\n", nameTeamA, strengthTeamA, nameTeamB, strengthTeamB);
+
+    if (strengthTeamA > strengthTeamB)
+        printf("%s eh mais forte\n", nameTeamA);
+    else if (strengthTeamB > strengthTeamA)
+        printf("%s eh mais forte\n", nameTeamB);
+    else
+        printf("Os times têm a mesma força\n");
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+******************************************************
+QUESTÃO 3
+******************************************************
+
+
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int matrixX[4][4];
+    int matrixY[4][4];
+    int result[4][4];
+    char operation[5];
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            scanf("%d", &matrixX[i][j]);
+        }
+    }
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            scanf("%d", &matrixY[i][j]);
+        }
+    }
+
+    scanf("%s", operation);
+
+    if (strcmp(operation, "soma") == 0) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                result[i][j] = matrixX[i][j] + matrixY[i][j];
+            }
+        }
+    } else if (strcmp(operation, "sub") == 0) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                result[i][j] = matrixX[i][j] - matrixY[i][j];
+            }
+        }
+    } else if (strcmp(operation, "mult") == 0) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                result[i][j] = 0;
+                for (int k = 0; k < 4; k++) {
+                    result[i][j] += matrixX[i][k] * matrixY[k][j];
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%*d", +4, result[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
